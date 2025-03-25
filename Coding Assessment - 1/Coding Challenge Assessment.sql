@@ -106,7 +106,7 @@ INSERT INTO AdoptionEvents (EventName, EventDate, Location) VALUES
 ('Summer Pet Fest', '2025-06-15', 'Chennai'),
 ('Monsoon Adoption Drive', '2025-07-10', 'Madurai'),
 ('New Year Pet Carnival', '2025-01-05', 'Coimbatore'),
-('Valentine’s Pet Love', '2025-02-14', 'Trichy'),
+('Valentineâ€™s Pet Love', '2025-02-14', 'Trichy'),
 ('Holi Pet Mela', '2025-03-25', 'Salem'),
 ('Diwali Pet Lights', '2025-11-10', 'Tirunelveli'),
 ('Christmas Pet Joy', '2025-12-25', 'Vellore'),
@@ -337,7 +337,10 @@ FROM Pets
 WHERE OwnerID IS NULL -- Used OwnerID IS NULL. Reason: If pet is not adopted, they have no owner.
 
 -- Task 16: Retrieve the names of all adopted pets along with the adopter's name from the 'Adoption' and 'User' (Participant) tables.
-
+	
+ALTER TABLE Pets
+ADD CONSTRAINT fk_ownerId_ FOREIGN KEY (OwnerID) REFERENCES Participants(ParticipantID) -- Using OwnerID as FK linking Participant table, since there is no User table.
+	
 SELECT p.Name AS PetName, pp.ParticipantName AS AdopterName
 FROM Pets p
 JOIN Participants pp ON p.OwnerID = pp.ParticipantID
