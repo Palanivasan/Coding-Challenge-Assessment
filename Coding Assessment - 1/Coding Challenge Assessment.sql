@@ -216,16 +216,16 @@ ALTER TABLE Pets
 ADD OwnerID INT
 
 UPDATE Pets
-SET OwnerID = 1
-WHERE AvailableForAdoption = 0 AND PetID = 10
-
-UPDATE Pets
-SET OwnerID = 2
+SET OwnerID = 3
 WHERE AvailableForAdoption = 0 AND PetID = 3
 
 UPDATE Pets
-SET OwnerID = 3
-WHERE AvailableForAdoption = 0 AND PetID = 5
+SET OwnerID = 2
+WHERE AvailableForAdoption = 0 AND PetID = 7
+
+UPDATE Pets
+SET OwnerID = 9
+WHERE AvailableForAdoption = 0 AND PetID = 10
 
 SELECT PetID, Name, Age, Breed, Type
 FROM Pets
@@ -336,15 +336,15 @@ SELECT PetID, Name, Age, Breed, Type
 FROM Pets
 WHERE OwnerID IS NULL -- Used OwnerID IS NULL. Reason: If pet is not adopted, they have no owner.
 
--- Task 16: Retrieve the names of all adopted pets along with the adopter's name from the 'Adoption' and 'User' (Participant) tables.
+-- Task 16: Retrieve the names of all adopted pets along with the adopter's name from the 'Adoption' (Pets) and 'User' (Participant) tables.
 	
 ALTER TABLE Pets
 ADD CONSTRAINT fk_ownerId_ FOREIGN KEY (OwnerID) REFERENCES Participants(ParticipantID) -- Using OwnerID as FK linking Participant table, since there is no User table.
 	
-SELECT p.Name AS PetName, pp.ParticipantName AS AdopterName
+SELECT p.Name AS PetName, part.ParticipantName AS AdopterName
 FROM Pets p
-JOIN Participants pp ON p.OwnerID = pp.ParticipantID
-WHERE p.OwnerID IS NOT NULL
+JOIN Participants part ON p.OwnerID = part.ParticipantID
+WHERE p.OwnerID IS NOT NULL AND part.ParticipantType = 'Adopter'
 
 -- Task 17: Retrieve a list of all shelters along with the count of pets currently available for adoption in each shelter.
 
